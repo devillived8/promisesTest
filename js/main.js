@@ -1,49 +1,27 @@
-let cats = document.querySelectorAll('.cats-wrapper__img');
-
-function showCats() {
-    const promises = []; 
+async function showCats() {
+    const cats = document.querySelectorAll('.cats-wrapper__img');
     
-    // Без await! Просто создаем промисы
-    const promise1 = new Promise((resolve, reject) => {
-        setTimeout(() => {
-            cats[0].style.display = "block";
-            resolve("Первый котик появился!");
-        }, 2000);
-    });
-    promises.push(promise1);
+    for (let i = 0; i < cats.length; i++) {
+        await new Promise(resolve => {
+            setTimeout(() => {
+                // Добавляем класс с анимацией
+                if (cats[i].classList.contains('cats-wrapper__left')) {
+                    cats[i].classList.add('slide-in-left');
+                } else {
+                    cats[i].classList.add('slide-in-right');
+                }
+                
+                resolve(`Котик ${i + 1} появился!`);
+            }, 1000 * i); // Каждую секунду новый кот
+        });
+    }
     
-    const promise2 = new Promise((resolve, reject) => {
-        setTimeout(() => {
-            cats[1].style.display = "block";
-            resolve("Второй котик появился!");
-        }, 4000);
-    });
-    promises.push(promise2);
-    
-    const promise3 = new Promise((resolve, reject) => {
-        setTimeout(() => {
-            cats[2].style.display = "block";
-            resolve("Третий котик появился!");
-        }, 6000);
-    });
-    promises.push(promise3);
-    
-    const promise4 = new Promise((resolve, reject) => {
-        setTimeout(() => {
-            cats[3].style.display = "block";
-            resolve("Четвертый котик появился!");
-        }, 8000);
-    });
-    promises.push(promise4);
-    
-    return promises;
+    return "Все котики пришли!";
 }
 
-let catsPromises = showCats();
-Promise.all(catsPromises)
-    .then(
-        results => alert("Все котики загружены!")
-        
-    
-    ) // исправлена опечатка
-    .catch(err => console.error(err));
+// Запуск
+showCats().then(() => {
+    setTimeout(() => {
+        alert("Все котики собрались в центре! 🐱");
+    }, 1000);
+});

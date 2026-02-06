@@ -1,10 +1,6 @@
 .main {
     height: 100vh;
-
-
-
 }
-
 
 .cats-wrapper {
     height: inherit;
@@ -12,21 +8,70 @@
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    position: relative;
+    gap: 20px; /* Расстояние между котами */
 }
 
 .cats-wrapper__img {
     width: 20%;
-    height: 30%;
-    display: none;
+    height: auto; /* Лучше auto для сохранения пропорций */
+    max-height: 30%;
+    object-fit: cover;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    opacity: 0; /* Начальная прозрачность */
+    display: block; /* Меняем на block, анимация покажет */
 }
 
+/* Классы для анимации */
+.cats-wrapper__left {
+    transform: translateX(-100px);
+}
 
+.cats-wrapper__right {
+    transform: translateX(100px);
+}
+
+/* Анимация появления */
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateX(var(--start-x, 0));
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Анимация для левых котов */
+.slide-in-left {
+    animation: slideIn 1s ease-out forwards;
+    --start-x: -100px;
+}
+
+/* Анимация для правых котов */
+.slide-in-right {
+    animation: slideIn 1s ease-out forwards;
+    --start-x: 100px;
+}
+
+/* Медиа-запрос для мобильных */
 @media (max-width: 376px) {
-  /* Стили для маленьких экранов */
-
-  .cats-wrapper__img {
-    width: 80%;
-    height: 30%;
-    display: none;
-}
+    .cats-wrapper {
+        gap: 15px;
+    }
+    
+    .cats-wrapper__img {
+        width: 80%;
+        max-height: 25%;
+    }
+    
+    .cats-wrapper__left {
+        transform: translateX(-50px); /* Меньшее смещение на мобильных */
+    }
+    
+    .cats-wrapper__right {
+        transform: translateX(50px);
+    }
 }
