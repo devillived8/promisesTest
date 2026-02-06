@@ -1,0 +1,32 @@
+.main {
+    height: 100vh;
+
+
+
+}
+
+
+.cats-wrapper {
+    height: inherit;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.cats-wrapper__img {
+    width: 20%;
+    height: 30%;
+    display: none;
+}
+
+
+@media (max-width: 376px) {
+  /* Стили для маленьких экранов */
+
+  .cats-wrapper__img {
+    width: 80%;
+    height: 30%;
+    display: none;
+}
+}
